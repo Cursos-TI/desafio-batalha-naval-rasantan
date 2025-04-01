@@ -3,25 +3,32 @@
 int main() {
     int tabuleiro[10][10] = {0};
 
-    // Navios horizontais/verticais (como no nível novato)
-    for(int i = 0; i < 3; i++) tabuleiro[2][i] = 3;
-    for(int i = 3; i <= 5; i++) tabuleiro[i][5] = 3;
-    for(int i = 1; i <= 3; i++) tabuleiro[7][i] = 3;
-    for(int i = 0; i <= 2; i++) tabuleiro[i][8] = 3;
-
-    // Navios diagonais
-    // Navio 5: Diagonal (0,0) -> (2,2)
-    for(int i = 0; i < 3; i++) {
-        tabuleiro[i][i] = 3;
+    // Habilidade "Cone" (centro em (4,4))
+    for(int i = 4-1; i <= 4+1; i++) {
+        for(int j = 4-1; j <= 4+1; j++) {
+            if(i >= 0 && i < 10 && j >= 0 && j < 10) {
+                tabuleiro[i][j] = 2; // 2 = Cone
+            }
+        }
     }
 
-    // Navio 6: Diagonal (5,3) -> (7,5)
-    for(int i = 0; i < 3; i++) {
-        tabuleiro[5+i][3+i] = 3;
+    // Habilidade "Cruz" (linha 2 e coluna 6)
+    for(int i = 0; i < 10; i++) {
+        tabuleiro[2][i] = 3; // 3 = Cruz
+        tabuleiro[i][6] = 3;
     }
 
-    // Exibir tabuleiro
-    printf("Tabuleiro 10x10 com navios diagonais:\n");
+    // Habilidade "Octaedro" (padrão matemático)
+    for(int i = 0; i < 10; i++) {
+        for(int j = 0; j < 10; j++) {
+            if((i + j) % 3 == 0) {
+                tabuleiro[i][j] = 4; // 4 = Octaedro
+            }
+        }
+    }
+
+    // Exibir tabuleiro com legendas
+    printf("Tabuleiro com habilidades (0=Agua, 2=Cone, 3=Cruz, 4=Octaedro):\n");
     for(int i = 0; i < 10; i++) {
         for(int j = 0; j < 10; j++) {
             printf("%d ", tabuleiro[i][j]);
